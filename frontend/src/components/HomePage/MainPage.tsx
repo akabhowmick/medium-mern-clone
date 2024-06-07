@@ -1,8 +1,6 @@
 import React from "react";
 import { AuthModal } from "../Modals/AuthModal";
-import "./css/MainPage.css";
-
-// gt-super, Georgia, Cambria, "Times New Roman", Times, serif
+import "./HomePage.css";
 
 const MainPage = ({ signInPopup }) => {
   const [modal, setModal] = React.useState(false);

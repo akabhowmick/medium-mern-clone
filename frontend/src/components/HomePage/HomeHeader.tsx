@@ -1,9 +1,15 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AuthModal } from "../Modals/AuthModal";
-import "./css/HomeHeader.css";
+import "./HomePage.css";
 
-function HomeHeader({ signInPopup, backgroundColor }) {
+function HomeHeader({
+  signInPopup,
+  backgroundColor,
+}: {
+  signInPopup?: React.MouseEventHandler<HTMLButtonElement>;
+  backgroundColor: string;
+}) {
   const [modal, setModal] = React.useState(false);
   const location = useLocation();
 

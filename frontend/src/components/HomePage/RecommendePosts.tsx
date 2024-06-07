@@ -1,18 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./css/RecommendedPost.css";
-import reactHtmlParser from "react-html-parser";
+import ".HomePage.css";
+import parse from "html-react-parser";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { Story } from "../../../types/Interfaces";
 
-const RecommededPosts = () => {
-  const [stories, setStories] = useState();
+const RecommendedPosts = () => {
+  const [stories, setStories] = useState<Story[]>();
   useEffect(() => {
     async function getStories() {
       await axios
         .get("/api/stories")
         .then((res) => {
-          // console.log(res.data.data);
           setStories(res.data.data?.slice(0, 9));
         })
         .catch((err) => {
@@ -61,7 +61,7 @@ const RecommededPosts = () => {
                             <span>{data?.userDetails[0]?.displayName} Blog</span>
                           </div>
                           <div className="content">
-                            <p>{reactHtmlParser(data?.title)}</p>
+                            <p>{parse(data?.title)}</p>
                           </div>
                           <div className="footer">
                             <span>
@@ -82,4 +82,4 @@ const RecommededPosts = () => {
   );
 };
 
-export default RecommededPosts;
+export default RecommendedPosts;

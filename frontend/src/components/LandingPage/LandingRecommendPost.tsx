@@ -1,160 +1,75 @@
-import React, { useEffect, useState } from "react";
-import "./css/LandingMainPage.css";
-
-import { Link } from "react-router-dom";
+import { Tooltip } from "antd";
+import React from "react";
+import "./css/LandingRecommendedPost.css";
+import moment from "moment";
+import parse from "html-react-parser";
 import axios from "axios";
-import { Skeleton } from "antd";
-import WhoToFollow from "./WhoToFollow";
+import { Link, useNavigate } from "react-router-dom";
 
-const LandingMainPage = ({userDetails}) => {
-  const [tab, setTab] = useState(0);
-  console.log(userDetails);
-  const [stories, setStories] = useState();
-  const [users, setUsers] = useState();
-  const [loading, setLoading] = useState(true);
-  const [userLoading, setUserLoading] = useState(true);
-
-  useEffect(() => {
-    async function getStories() {
-      await axios
-        .get("/api/stories")
-        .then((res) => {
-          // console.log(res.data.data);
-          setLoading(false);
-          setStories(res.data.data?.slice(0, 10));
-        })
-        .catch((err) => {
-          console.log(err.response.data.message);
-          setLoading(false);
-        });
-    }
-    getStories();
-  }, []);
-
-  useEffect(() => {
-    async function getUsers() {
-      await axios
-        .get("/api/user")
-        .then((res) => {
-          if (res.data.status) {
-            let _users = res.data?.data?.filter((data) => data?._id !== userDetails?._id)
-            setUsers(_users);
-            setUserLoading(false);
-          }
-        })
-        .catch((err) => {
-          console.log(err.response.data.message);
-          setUserLoading(false);
-        });
-    }
-    getUsers();
-  }, []);
-
+export const LandingRecommendedPost = ({ data, userDetails }) => {
+  const navigate = useNavigate();
+  const addToList = async (id) => {
+    const body = {
+      userid: userDetails?._id,
+    };
+    console.log(body);
+    await axios
+      .post(`/api/user/list/${id}`, body)
+      .then((res) => {
+        console.log(res.data);
+        console.log("list added successfully");
+        navigate("/me/lists");
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+      });
+  };
   return (
-    <div className="landing-main">
-      <div className="landing-main-container">
-        <div className="landing-main-left">
-          <div className="landing-main-tabs">
-            <div
-              onClick={() => setTab(0)}
-              className={`tab ${tab === 0 && "active"}`}
-            >
-              <span>FOLLOWING</span>
-            </div>
-            <div
-              onClick={() => setTab(1)}
-              className={`tab ${tab === 1 && "active"}`}
-            >
-              <span>RECOMMENDED FOR YOU</span>
+    <div className="landing-recommended-post">
+      <div className="landing-recommended-post-container">
+        <div className="landing-recommended-left">
+          <div className="landing-top">
+            <img src={data?.userDetails[0]?.photoURL} alt="logo" />
+            <span>{data?.userDetails[0]?.displayName}</span>
+          </div>
+          <div className="landing-content">
+            <Link to={`/story/${data?._id}`}>{parse(data?.title)}</Link>
+
+            {/* {truncate(reactHtmlParser(data?.title), 20)} */}
+          </div>
+          <div className="landing-footer">
+            <span>{moment(data?.created_at).format("MMM DD")} · 6 min read</span>
+            <div className="icons">
+              <Tooltip title="Save">
+                <span onClick={() => addToList(data?._id)}>
+                  <svg width="25" height="25" viewBox="0 0 25 25" fill="none" className="px">
+                    <path
+                      d="M18 2.5a.5.5 0 0 1 1 0V5h2.5a.5.5 0 0 1 0 1H19v2.5a.5.5 0 1 1-1 0V6h-2.5a.5.5 0 0 1 0-1H18V2.5zM7 7a1 1 0 0 1 1-1h3.5a.5.5 0 0 0 0-1H8a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V7z"
+                      fill="#292929"
+                    ></path>
+                  </svg>
+                </span>
+              </Tooltip>
+
+              <span>
+                <svg className="eh el py" width="25" height="25">
+                  <path
+                    d="M5 12.5c0 .55.2 1.02.59 1.41.39.4.86.59 1.41.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41A1.93 1.93 0 0 0 7 10.5c-.55 0-1.02.2-1.41.59-.4.39-.59.86-.59 1.41zm5.62 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41a1.93 1.93 0 0 0-1.41-.59c-.55 0-1.03.2-1.42.59-.39.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.43.59.56 0 1.03-.2 1.42-.59.39-.39.58-.86.58-1.41 0-.55-.2-1.02-.58-1.41a1.93 1.93 0 0 0-1.42-.59c-.56 0-1.04.2-1.43.59-.39.39-.58.86-.58 1.41z"
+                    fillRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
             </div>
           </div>
-          <div className="landing-write-story">
-            <h6>Share your ideas with millions of readers.</h6>
-            <Link to="/new-story">
-              <button>Write on Medium</button>
-            </Link>
-          </div>
-          {tab === 0 && (
-            <>
-              {/* <div className="follow"> */}
-              {/* <h2>Who to follow</h2> */}
-              {users?.map((data) => (
-                <WhoToFollow key={data?._id} data={data} />
-              ))}
-
-              {/* <WhoToFollow />
-              <WhoToFollow />
-              <WhoToFollow />
-              <WhoToFollow />
-              <WhoToFollow /> */}
-              {/* </div> */}
-            </>
-          )}
-          {tab === 1 && (
-            <div className="landing-recommended-posts">
-              {[...Array(10)].map((_, index) => {
-                return (
-                  <>
-                    {loading && (
-                      <Skeleton.Button
-                        key={index}
-                        style={{
-                          margin: "10px 0",
-                        }}
-                        active={true}
-                        size={"lage"}
-                        shape={"default"}
-                        block={true}
-                      />
-                    )}
-                  </>
-                );
-              })}
-
-              {stories?.map((data) => (
-                <LandingRecommendedPost userDetails = {userDetails} key={data?._id} data={data} />
-              ))}
-
-              {/* <LandingRecommendedPost />
-              <LandingRecommendedPost />
-              <LandingRecommendedPost />
-              <LandingRecommendedPost />
-              <LandingRecommendedPost /> */}
-            </div>
-          )}
         </div>
-        <div className="landing-main-right">
-          <div className="recommended-topics">
-            <h2>Recommended topics</h2>
-            <div className="topic">
-              <span>Technology</span>
-              <span>Money</span>
-              <span>Business</span>
-              <span>Productiviy</span>
-              <span>Psychology</span>
-              <span>Mindfulness</span>
-              <span>Art</span>
-            </div>
-          </div>
-          <div className="follow">
-            <h2>Who to follow</h2>
-            {users?.map((data) => (
-              <WhoToFollow key={data?._id} data={data} />
-            ))}
-            {[...Array(5)].map((_, idx) => {
-              return (
-                <>
-                  {userLoading && (
-                    <Skeleton key={idx} active avatar paragraph={{ rows: 1 }} />
-                  )}
-                </>
-              );
-            })}
-          </div>
+        <div className="landing-recommended-right">
+          <img
+            width={50}
+            src="https://media-public.canva.com/FzeL8/MAEva8FzeL8/1/tl.png"
+            alt="logo"
+          />
         </div>
       </div>
     </div>
   );
 };
-
-export default LandingMainPage;

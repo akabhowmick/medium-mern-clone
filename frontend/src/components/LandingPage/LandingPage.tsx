@@ -2,7 +2,7 @@ import React from "react";
 import LandHeader from "./LandHeader";
 import LandingMainPage from "./LandingMainPage";
 
-const Index = ({userDetails}) => {
+export const LandingPage = ({userDetails}) => {
   return (
     <div>
       <LandHeader />
@@ -12,5 +12,3 @@ const Index = ({userDetails}) => {
     </div>
   );
 };
-
-export default Index;

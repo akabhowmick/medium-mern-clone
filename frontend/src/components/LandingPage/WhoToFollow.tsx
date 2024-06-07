@@ -1,14 +1,12 @@
 import { Avatar } from "antd";
 import React from "react";
 import { truncate } from "../../helpers/truncate";
-// import Avatar from "react-avatar";
 
 const WhoToFollow = ({ data }) => {
   return (
     <div className="follow-content">
       <Avatar
         size={40}
-        // round={true}
         src={data?.photoURL}
       />
       <div className="info">
