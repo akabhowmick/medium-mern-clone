@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import LandingRecommendedPost from "./LandingRecommendedPost";
-import "./css/LandingMainPage.css";
+import "./LandingPage.css";
 import WhoToFollow from "./WhoToFollow";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Skeleton } from "antd";
+import { UserDetails } from "../../../types/Interfaces";
+import { LandingRecommendedPost } from "./LandingRecommendPost";
 
-const LandingMainPage = ({userDetails}) => {
+const LandingMainPage = ({ userDetails }) => {
   const [tab, setTab] = useState(0);
-  console.log(userDetails);
-  const [stories, setStories] = useState();
+  const [stories, setStories] = useState<UserDetails[]>();
   const [users, setUsers] = useState();
   const [loading, setLoading] = useState(true);
   const [userLoading, setUserLoading] = useState(true);
@@ -19,7 +19,6 @@ const LandingMainPage = ({userDetails}) => {
       await axios
         .get("/api/stories")
         .then((res) => {
-          // console.log(res.data.data);
           setLoading(false);
           setStories(res.data.data?.slice(0, 10));
         })
@@ -37,7 +36,7 @@ const LandingMainPage = ({userDetails}) => {
         .get("/api/user")
         .then((res) => {
           if (res.data.status) {
-            let _users = res.data?.data?.filter((data) => data?._id !== userDetails?._id)
+            const _users = res.data?.data?.filter((data) => data?._id !== userDetails?._id);
             setUsers(_users);
             setUserLoading(false);
           }
@@ -55,16 +54,10 @@ const LandingMainPage = ({userDetails}) => {
       <div className="landing-main-container">
         <div className="landing-main-left">
           <div className="landing-main-tabs">
-            <div
-              onClick={() => setTab(0)}
-              className={`tab ${tab === 0 && "active"}`}
-            >
+            <div onClick={() => setTab(0)} className={`tab ${tab === 0 && "active"}`}>
               <span>FOLLOWING</span>
             </div>
-            <div
-              onClick={() => setTab(1)}
-              className={`tab ${tab === 1 && "active"}`}
-            >
+            <div onClick={() => setTab(1)} className={`tab ${tab === 1 && "active"}`}>
               <span>RECOMMENDED FOR YOU</span>
             </div>
           </div>
@@ -76,18 +69,9 @@ const LandingMainPage = ({userDetails}) => {
           </div>
           {tab === 0 && (
             <>
-              {/* <div className="follow"> */}
-              {/* <h2>Who to follow</h2> */}
               {users?.map((data) => (
                 <WhoToFollow key={data?._id} data={data} />
               ))}
-
-              {/* <WhoToFollow />
-              <WhoToFollow />
-              <WhoToFollow />
-              <WhoToFollow />
-              <WhoToFollow /> */}
-              {/* </div> */}
             </>
           )}
           {tab === 1 && (
@@ -102,7 +86,7 @@ const LandingMainPage = ({userDetails}) => {
                           margin: "10px 0",
                         }}
                         active={true}
-                        size={"lage"}
+                        size={"large"}
                         shape={"default"}
                         block={true}
                       />
@@ -112,14 +96,8 @@ const LandingMainPage = ({userDetails}) => {
               })}
 
               {stories?.map((data) => (
-                <LandingRecommendedPost userDetails = {userDetails} key={data?._id} data={data} />
+                <LandingRecommendedPost userDetails={userDetails} key={data?._id} data={data} />
               ))}
-
-              {/* <LandingRecommendedPost />
-              <LandingRecommendedPost />
-              <LandingRecommendedPost />
-              <LandingRecommendedPost />
-              <LandingRecommendedPost /> */}
             </div>
           )}
         </div>
@@ -130,7 +108,7 @@ const LandingMainPage = ({userDetails}) => {
               <span>Technology</span>
               <span>Money</span>
               <span>Business</span>
-              <span>Productiviy</span>
+              <span>Productivity</span>
               <span>Psychology</span>
               <span>Mindfulness</span>
               <span>Art</span>
@@ -143,21 +121,9 @@ const LandingMainPage = ({userDetails}) => {
             ))}
             {[...Array(5)].map((_, idx) => {
               return (
-                <>
-                  {userLoading && (
-                    <Skeleton key={idx} active avatar paragraph={{ rows: 1 }} />
-                  )}
-                </>
+                <>{userLoading && <Skeleton key={idx} active avatar paragraph={{ rows: 1 }} />}</>
               );
             })}
-
-            
-            {/* <WhoToFollow />
-            <WhoToFollow />
-            <WhoToFollow />
-            <WhoToFollow />
-            <WhoToFollow />
-            <WhoToFollow /> */}
           </div>
         </div>
       </div>

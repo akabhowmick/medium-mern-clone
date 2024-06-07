@@ -2,7 +2,7 @@ import React from "react";
 import ListMain from "./ListMain";
 import LandHeader from "../LandingPage/LandHeader";
 
-const Index = ({ userDetails }) => {
+export const Lists = ({ userDetails }) => {
   return (
     <div>
       <LandHeader />
@@ -11,4 +11,3 @@ const Index = ({ userDetails }) => {
   );
 };
 
-export default Index;
