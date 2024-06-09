@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LandHeader from "../LandingPage/LandHeader";
-import "./index.css";
+import "./ViewStory.css";
 import axios from "axios";
 import parse from 'html-react-parser';
 import { Avatar, Spin, Tooltip } from "antd";
@@ -12,10 +12,11 @@ import HomeHeader from "../HomePage/HomeHeader";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import { auth, provider } from "../firebase";
+import { Story } from "../../../types/Interfaces";
 
 const Index = ({ userDetails }) => {
   const [loading, setLoading] = useState(false);
-  const [singleB, setSingleB] = useState();
+  const [singleStory, setSingleStory] = useState<Story>();
   const { id } = useParams();
   const navigate = useNavigate();
   const [modal, setModal] = React.useState(false);
@@ -28,7 +29,7 @@ const Index = ({ userDetails }) => {
         .get(`/api/stories/${id}`)
         .then((res) => {
           console.log(res.data.data);
-          setSingleB(res.data.data);
+          setSingleStory(res.data.data);
           setLoading(false);
         })
         .catch((err) => {
@@ -64,27 +65,27 @@ const Index = ({ userDetails }) => {
       {user ? <LandHeader /> : <HomeHeader backgroundColor="#fff" />}
 
       <Spin spinning={loading}>
-        <div className="singleBlog">
+        <div className="singleStorylog">
           <h1
-            className="singleBlog__title"
+            className="singleStorylog__title"
             style={{ fontFamily: " Lato, sans-serif", fontSize: "32px" }}
           >
-            {parse(singleB?.title)}
+            {parse(singleStory?.title as string)}
           </h1>
-          {singleB?.userDetails && (
-            <div className="singleBlog_author">
-              <div className="singleBlog_left">
+          {singleStory?.userDetails && (
+            <div className="singleStorylog_author">
+              <div className="singleStorylog_left">
                 <div className="author-details">
                   <div>
-                    <Avatar size={"large"} src={singleB?.userDetails[0]?.photoURL} />
+                    <Avatar size={"large"} src={singleStory?.userDetails[0]?.photoURL} />
                   </div>
                   <div className="author-name">
-                    <strong>{singleB?.userDetails[0]?.displayName}</strong>
-                    <span>{moment(singleB?.created_at).format("DD MMM, YYYY")}</span>
+                    <strong>{singleStory?.userDetails[0]?.displayName}</strong>
+                    <span>{moment(singleStory?.created_at).format("DD MMM, YYYY")}</span>
                   </div>
                 </div>
               </div>
-              <div className="singleBlog_right">
+              <div className="singleStorylog_right">
                 <Tooltip title="Save">
                   <span
                     style={{
@@ -115,7 +116,7 @@ const Index = ({ userDetails }) => {
               </div>
             </div>
           )}
-          <div className="singleBlog__body">{parse(singleB?.content)}</div>
+          <div className="singleStorylog__body">{parse(singleStory?.content as string)}</div>
         </div>
       </Spin>
       <AuthModal

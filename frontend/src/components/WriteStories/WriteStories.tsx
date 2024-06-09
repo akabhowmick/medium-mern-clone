@@ -1,6 +1,6 @@
 import React from "react";
 import LandHeader from "../LandingPage/LandHeader";
-import "./css/index.css";
+import "./WriteStories.css";
 import MediumEditor from "medium-editor";
 import "medium-editor/dist/css/medium-editor.css";
 import "medium-editor/dist/css/themes/beagle.css";
@@ -9,13 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 const Index = ({ userDetails }) => {
   const [title, setTitle] = React.useState("");
-
   const [desc, setDesc] = React.useState("");
-
   const navigate = useNavigate();
-
-  // console.log(title);
-  // console.log(desc);
 
   const handleSubmitStories = async () => {
     const body = {
@@ -87,8 +82,6 @@ const Index = ({ userDetails }) => {
           autoLink: true,
           anchor: {
             placeholderText: "Enter reference link",
-            // customClassOption: "btn",
-            // customClassOptionText: "Refernce link",
           },
           paste: {
             cleanPastedHTML: true,
