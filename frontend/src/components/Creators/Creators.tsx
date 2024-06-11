@@ -2,7 +2,7 @@ import React from "react";
 import HomeHeader from "../HomePage/HomeHeader";
 import "./Creators.css";
 
-const index = () => {
+export const Creators = () => {
   return (
     <>
       <HomeHeader backgroundColor={"#f24d2e"} />
@@ -34,4 +34,3 @@ const index = () => {
   );
 };
 
-export default index;

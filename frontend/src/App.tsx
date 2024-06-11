@@ -9,6 +9,13 @@ import { userId } from "./features/userIdSlice";
 import { MainPage } from "./components/HomePage/MainPage";
 import { OurStory } from "./components/OurStory/OurStory";
 import { WriteStories } from "./components/WriteStories/WriteStories";
+import { Memberships } from "./components/Memberships/Memberships";
+import { Creators } from "./components/Creators/Creators";
+import { ViewStory } from "./components/ViewStory/ViewStory";
+import { Lists } from "./components/Lists/Lists";
+import { MyStories } from "./components/MyStories/MyStories";
+import { LandingPage } from "./components/LandingPage/LandingPage";
+import { auth } from "./components/firebase";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,7 +81,7 @@ function App() {
         <Routes>
           <Route path="/getting-started" element={<MainPage signInPopup={undefined} />} />
           <Route path="/our-story" element={<OurStory />} />
-          <Route path="/membership" element={<Membership />} />
+          <Route path="/membership" element={<Memberships />} />
           <Route path="/creators" element={<Creators />} />
           <Route path="/story/:id" element={<ViewStory userDetails={userDetails} />} />
           <Route

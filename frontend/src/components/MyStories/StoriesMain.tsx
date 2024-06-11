@@ -5,13 +5,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Skeleton } from "antd";
 
-// ! fix the things
-
 const StoriesMain = ({ userDetails }) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // ! seprate the two things here
+  // ! separate the two things here
 
   const getStories = async () => {
     setLoading(true);
@@ -32,6 +30,7 @@ const StoriesMain = ({ userDetails }) => {
     if (userDetails?._id) {
       getStories();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userDetails]);
 
   return (
