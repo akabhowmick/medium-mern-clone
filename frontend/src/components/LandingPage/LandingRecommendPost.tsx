@@ -1,6 +1,6 @@
 import { Tooltip } from "antd";
 import React from "react";
-import "./css/LandingRecommendedPost.css";
+import ".LandingPage.css";
 import moment from "moment";
 import parse from "html-react-parser";
 import axios from "axios";

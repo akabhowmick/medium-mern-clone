@@ -7,29 +7,33 @@ import { Skeleton } from "antd";
 
 // ! fix the things
 
-const StoriesMain = ({userDetails}) => {
+const StoriesMain = ({ userDetails }) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // ! seprate the two things here
+
+  const getStories = async () => {
+    setLoading(true);
+    await axios
+      .get(`/api/stories/user/${userDetails?._id}`)
+      .then((res) => {
+        console.log(res.data);
+        setStories(res.data.data.reverse());
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.response.data.message);
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     if (userDetails?._id) {
-      async function getStories() {
-        setLoading(true)
-        await axios
-          .get(`/api/stories/user/${userDetails?._id}`)
-          .then((res) => {
-            console.log(res.data);
-            setStories(res.data.data.reverse());
-            setLoading(false);
-          })
-          .catch((err) => {
-            console.log(err.response.data.message);
-            setLoading(false);
-          });
-      }
-
       getStories();
     }
   }, [userDetails]);
+
   return (
     <div className="story-main">
       <div className="story-main-container">
@@ -53,7 +57,7 @@ const StoriesMain = ({userDetails}) => {
                       margin: "10px 0",
                     }}
                     active={true}
-                    size={"lage"}
+                    size={"large"}
                     shape={"default"}
                     block={true}
                     key={index}
@@ -62,20 +66,10 @@ const StoriesMain = ({userDetails}) => {
               </>
             );
           })}
-          {
-            stories?.length === 0 && `No stories found`
-          }
+          {stories?.length === 0 && `No stories found`}
           {stories?.map((data) => (
             <Stories key={data?._id} data={data} />
           ))}
-
-          {/* <Stories />
-          <Stories />
-          <Stories />
-          <Stories />
-          <Stories />
-          <Stories />
-          <Stories /> */}
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React from "react";
 import HomeHeader from "../HomePage/HomeHeader";
 import "./OurStory.css";
 
-const index = () => {
+export const OurStory = () => {
   return (
     <>
       <HomeHeader backgroundColor={"#ffffff"} />
@@ -69,5 +69,3 @@ const index = () => {
     </>
   );
 };
-
-export default index;

@@ -7,7 +7,7 @@ import "medium-editor/dist/css/themes/beagle.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Index = ({ userDetails }) => {
+export const WriteStories = ({ userDetails }) => {
   const [title, setTitle] = React.useState("");
   const [desc, setDesc] = React.useState("");
   const navigate = useNavigate();
@@ -151,5 +151,3 @@ const Index = ({ userDetails }) => {
     </>
   );
 };
-
-export default Index;

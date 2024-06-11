@@ -2,7 +2,7 @@ import React from "react";
 import { AuthModal } from "../Modals/AuthModal";
 import "./HomePage.css";
 
-const MainPage = ({ signInPopup }) => {
+export const MainPage = ({ signInPopup }) => {
   const [modal, setModal] = React.useState(false);
 
   return (
@@ -25,5 +25,3 @@ const MainPage = ({ signInPopup }) => {
     </div>
   );
 };
-
-export default MainPage;

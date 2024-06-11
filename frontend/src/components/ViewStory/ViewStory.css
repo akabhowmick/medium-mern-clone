@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  /* width: fit-content; */
 }
 
 .singleBlog__title p,
@@ -146,10 +145,6 @@
 .sharethis-inline-share-buttons {
   display: flex;
 }
-
-/* .blogCard__vertical {
-  width: 100%;
-} */
 
 @media only screen and (max-width: 600px) {
   time {

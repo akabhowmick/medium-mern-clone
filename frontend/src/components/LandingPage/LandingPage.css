@@ -135,14 +135,12 @@ a:hover {
 
 .tab {
   margin: 10px 0;
-  /* border-bottom: 1px solid rgb(207, 207, 207); */
   color: rgb(207, 207, 207);
   cursor: pointer;
   margin-right: 20px;
 }
 
 .active {
-  /* border-bottom: 1px solid rgb(8, 8, 8); */
   color: rgb(8, 8, 8);
   font-weight: 700;
 }
@@ -177,7 +175,6 @@ a:hover {
 
 .landing-main-right {
   display: flex;
-  /* align-items: center; */
   flex: 0.3;
   flex-direction: column;
   margin-left: 20px;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LandHeader from "../LandingPage/LandHeader";
 import "./ViewStory.css";
 import axios from "axios";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import { Avatar, Spin, Tooltip } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
@@ -14,7 +14,7 @@ import { selectUser } from "../../features/userSlice";
 import { auth, provider } from "../firebase";
 import { Story } from "../../../types/Interfaces";
 
-const Index = ({ userDetails }) => {
+export const ViewStory = ({ userDetails }) => {
   const [loading, setLoading] = useState(false);
   const [singleStory, setSingleStory] = useState<Story>();
   const { id } = useParams();
@@ -127,5 +127,3 @@ const Index = ({ userDetails }) => {
     </>
   );
 };
-
-export default Index;
