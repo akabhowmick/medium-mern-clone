@@ -4,13 +4,13 @@ import WhoToFollow from "./WhoToFollow";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Skeleton } from "antd";
-import { UserDetails } from "../../../types/Interfaces";
+import { Story, UserDetails } from "../../../types/Interfaces";
 import { LandingRecommendedPost } from "./LandingRecommendPost";
 
 const LandingMainPage = ({ userDetails }) => {
   const [tab, setTab] = useState(0);
-  const [stories, setStories] = useState<UserDetails[]>();
-  const [users, setUsers] = useState();
+  const [stories, setStories] = useState<Story[]>([]);
+  const [users, setUsers] = useState<UserDetails[]>([]);
   const [loading, setLoading] = useState(true);
   const [userLoading, setUserLoading] = useState(true);
 
@@ -47,7 +47,7 @@ const LandingMainPage = ({ userDetails }) => {
         });
     }
     getUsers();
-  }, []);
+  }, [userDetails?._id]);
 
   return (
     <div className="landing-main">

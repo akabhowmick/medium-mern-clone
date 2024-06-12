@@ -1,6 +1,6 @@
 import { Tooltip } from "antd";
 import React from "react";
-import "./css/Stories.css";
+import "./Stories.css";
 import parse from 'html-react-parser';
 import moment from "moment";
 import { Link } from "react-router-dom";

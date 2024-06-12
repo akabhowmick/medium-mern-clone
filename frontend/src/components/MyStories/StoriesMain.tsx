@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Stories from "./Stories";
-import "./css/StoriesMain.css";
+import "./Stories.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Skeleton } from "antd";
+import { Story } from "../../../types/Interfaces";
 
 const StoriesMain = ({ userDetails }) => {
-  const [stories, setStories] = useState([]);
+  const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(false);
-
-  // ! separate the two things here
 
   const getStories = async () => {
     setLoading(true);
     await axios
       .get(`/api/stories/user/${userDetails?._id}`)
       .then((res) => {
-        console.log(res.data);
         setStories(res.data.data.reverse());
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        console.log(err);
         setLoading(false);
       });
   };

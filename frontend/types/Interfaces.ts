@@ -4,6 +4,7 @@ export interface UserDetails {
   phoneNumber: string;
   photoURL: string;
   providerId: string;
+  _id: string;
   uid: string;
   created_at: {
     type: Date;
