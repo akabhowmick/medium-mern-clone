@@ -6,7 +6,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connect } from "./db";
 
-if (process.env.NODE_ENV !== "production") {
+if (typeof process !== 'undefined' && process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
 
@@ -18,7 +18,7 @@ connect();
 app.use(json({ limit: "500mb" }));
 app.use(urlencoded({ extended: true, limit: "500mb" }));
 
-app.use(cors()); // Place cors middleware before any route handling
+app.use(cors());
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
