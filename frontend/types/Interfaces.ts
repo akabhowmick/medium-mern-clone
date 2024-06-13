@@ -11,7 +11,7 @@ export interface UserDetails {
   };
   reading_list: Story[];
 }
-// ! the ref is a little strange 
+
 export interface Story {
   title: string;
   _id: string;
